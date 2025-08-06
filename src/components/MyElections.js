@@ -3,10 +3,10 @@ import { Context } from "../context/context"
 
 export const MyElections = () => {
     const { loginInfo } = useContext(Context)
-    console.log(loginInfo)
+    // console.log(loginInfo)
     return (
         <div>
-            <h2>My Votes</h2>
+            <h2>My Elections</h2>
             <div className="my-votes flex">
                 {loginInfo && Array.isArray(loginInfo.myElections) && loginInfo.myElections.length > 0 ? (
                     loginInfo.myElections.map((election, index) => (
@@ -18,7 +18,7 @@ export const MyElections = () => {
                             </div>
                         
                     ))
-                ) : ("No votes found")}
+                ) : ("No Elections found")}
             </div>
         </div>
 

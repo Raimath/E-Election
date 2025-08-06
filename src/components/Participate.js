@@ -6,7 +6,7 @@ export const Participate = () => {
     const { loginInfo } = useContext(Context)
     const [candidate, setCandidate] = useState({
         candidateName: "",
-        ecandidateId: localStorage.getItem('id')||loginInfo._id,
+        candidateId: localStorage.getItem('id')||loginInfo._id,
         electionCode: "",
         partyName: "",
         partyLogo: "",
@@ -28,7 +28,7 @@ export const Participate = () => {
             return;
         }
 
-        const { candidateName, electionCode, ecandidateId, partyName, partyLogo } = candidate
+        const { candidateName, electionCode, candidateId, partyName, partyLogo } = candidate
         e.preventDefault();
         // setformLoading(true)
         if (candidateName && electionCode && partyName && partyLogo) {
@@ -38,7 +38,7 @@ export const Participate = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ candidateName, ecandidateId, electionCode, partyName, partyLogo })
+                body: JSON.stringify({ candidateName, candidateId, electionCode, partyName, partyLogo })
             });
             const data = await res.json()
             // setformLoading(false)

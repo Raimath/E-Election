@@ -35,7 +35,7 @@ export const Navbar = () => {
             <li><NavLink to="/" onClick={() => {
               setisLogedin(false);
               localStorage.removeItem('id'); setMenuOpen(false);
-            }}>Logout</NavLink></li>
+            }}></NavLink></li>
           </>
         ) : (
           <>

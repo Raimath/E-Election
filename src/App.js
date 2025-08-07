@@ -15,6 +15,7 @@ import { MyVotes } from './components/MyVotes';
 import { MyElections } from './components/MyElections';
 import { Participate } from './components/Participate';
 import { OnGoing } from './components/OnGoing';
+import { Withdraw } from './components/Withdraw';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/profile" element={<Profile />} >
             <Route path="myProfile" element={<MyProfile />} />
             <Route path="myVotes" element={<MyVotes />} />
+            <Route path="withdraw" element={<Withdraw />} />
             <Route path="myElections" element={<MyElections />} />
           </Route>
           <Route path="/vote/:election" element={<Vote />} />

@@ -12,6 +12,7 @@ export const MyElections = () => {
                     loginInfo.myElections.map((election, index) => (
                         
                             <div key={index} className="vote-item flex">
+                                
                                 <p>Election: {election.electionName}</p>
                                 <p>Election: {election.partyName}</p>
                                 <img src={election.partyLogo} alt={`${election.partyName} logo`} />

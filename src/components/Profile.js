@@ -21,12 +21,14 @@ export const Profile = () => {
               {loginInfo.role === "voter" ? (
                 <NavLink to="myVotes" className={({ isActive }) => isActive ? "profile-link my-profile-active" : "profile-link"}>My Votes</NavLink>
               ) : (
-                <NavLink to="myElections" className={({ isActive }) => isActive ? "profile-link my-profile-active" : "profile-link"}>My Elections</NavLink>
-              )}
+                <>
+                  <NavLink to="myElections" className={({ isActive }) => isActive ? "profile-link my-profile-active" : "profile-link"}>My Elections</NavLink>
+                  <NavLink to="withdraw" className={({ isActive }) => isActive ? "profile-link my-profile-active" : "profile-link"}>Withdraw</NavLink>
+                </>)}
               <NavLink to="/" onClick={() => {
                 setisLogedin(false);
-                localStorage.removeItem('id'); 
-              }}>Logout</NavLink>        
+                localStorage.removeItem('id');
+              }}>Logout</NavLink>
             </div>
             <Outlet />
           </div>

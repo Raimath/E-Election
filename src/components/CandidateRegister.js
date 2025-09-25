@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { FormLoader } from './Loader';
 
 export const CandidateRegister = () => {
-  
+    const [formLoading, setformLoading] = useState(false)
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         name: "",
         fatherName: "",
@@ -27,7 +29,7 @@ export const CandidateRegister = () => {
     const handleRegister = async (e) => {
         const { name, fatherName, address, role, age, phone, constituency, email, password, confirmPassword } = user
         e.preventDefault();
-        // setformLoading(true)
+        setformLoading(true)
         if (name && email && password && (password === confirmPassword)) {
             // axios.post("http://localhost:8000/register",user).then((res)=> console.log(res))
             const res = await fetch("http://localhost:8000/candidateRegister", {
@@ -38,14 +40,14 @@ export const CandidateRegister = () => {
                 body: JSON.stringify({ name, fatherName, role, address, age, phone, constituency, email, password })
             });
             const data = await res.json()
-            // setformLoading(false)
+            setformLoading(false)
             alert(data.message)
-            // navigate('/login')
+            navigate('/login')
 
         }
         else {
             alert("Invalid input")
-            // setformLoading(false)
+            setformLoading(false)
         }
     }
     return (
@@ -55,7 +57,7 @@ export const CandidateRegister = () => {
             <section className="section form-section">
                 <div className="container form-container flex">
                     <form className=" form-content flex" >
-                        {/* {formLoading ? (<FormLoader/>) : ("")} */}
+                        {formLoading ? (<FormLoader/>) : ("")}
                         <h2>Candidate Register</h2>
 
                         <div className='form-input flex'>

@@ -8,7 +8,7 @@ export const Vote = () => {
     const electionCode = election;
     const [varified, setVarified] = useState(false);
     const [electionDetails, setElectionDetails] = useState(null);
-    const { loginInfo } = useContext(Context);
+    const { loginInfo, setloginInfo } = useContext(Context);
 
     const [user, setUser] = useState({
         code: ""
@@ -24,10 +24,10 @@ export const Vote = () => {
     }
 
     const handleVerification = () => {
-        if(user.code===electionCode){
+        if (user.code === electionCode) {
             setVarified(true);
             alert("Voter verified successfully");
-        }   
+        }
     }
     const fetchElectionDetails = async () => {
         try {
@@ -65,24 +65,35 @@ export const Vote = () => {
                 body: JSON.stringify({ candidateId, voterId })
             });
             const data = await response.json();
-            alert(data.message);
-            console.log(voterId);
+            if (data.message) {
+                alert(data.message);
+            }
+
+            // only update loginInfo if backend actually sent user object
+            if (data.data) {
+                setloginInfo(data.data);
+            }
 
         } catch (error) {
 
             alert("Error casting vote. Please try again.");
         }
     }
+    const hasVotedInThisElection = loginInfo?.myVotes?.some(
+        (vote) => Number(vote.electionCode) === Number(electionCode)
+    );
+
+
     useEffect(() => {
         fetchElectionDetails();
     }, [electionCode]);
 
     return (
         <div>
-            <section className="section onGoing-section">
+            <section className="section vote-section onGoing-section">
                 <div className="container onGoing-container flex" >
-                    <div className="container onGoing-container flex" >
-                        {!varified? <div className='voter-verification'>
+                    <div className="container flex flex-column" >
+                        {!varified ? <div className='voter-verification'>
                             <form className="form-content flex" >
                                 <h2>Voter Verification</h2>
 
@@ -92,10 +103,10 @@ export const Vote = () => {
                                 </div>
 
                                 <button type="submit" className="login-btn" name="submit" onClick={handleVerification} >Verify  </button>
-                                
+
                             </form>
-                        </div>:("")}
-                       
+                        </div> : ("")}
+
 
 
                         <h2>Vote</h2>
@@ -116,12 +127,18 @@ export const Vote = () => {
                                                 <img src={candidate.partyLogo} alt={candidate.party} className="party-logo" />
                                                 {/* <NavLink to={`/vote/${electionCode}/candidate/${candidate._id}`} className="vote-button">Vote</NavLink> */}
                                                 <button className="vote-button" onClick={() => handleVote(candidate._id)}>Vote</button>
+
                                             </div>
-                                            
+
                                         ))}
                                     </div>) : "No election details available"}
                             </div>
                         ) : ""}
+                        {hasVotedInThisElection && (
+                            <NavLink to={`/results/${electionCode}`} className="vote-button">
+                                Show Result
+                            </NavLink>
+                        )}
                     </div>
                 </div>
             </section>

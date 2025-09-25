@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Context } from '../context/context'
+import { FormLoader } from './Loader';
+
 
 export const VoterLogin = () => {
     const { setloginInfo, setisLogedin } = useContext(Context);
-    // const [formLoading, setformLoading] = useState(false)
-
+    const [formLoading, setformLoading] = useState(false)
+    
     // const navigate = useNavigate();
     const [user, setUser] = useState({
         email: "",
@@ -22,7 +24,7 @@ export const VoterLogin = () => {
     const handleLogin = async (e) => {
         const { email, password } = user
         e.preventDefault();
-        // setformLoading(true)
+        setformLoading(true)
         if (email && password) {
             try {
                 const res = await fetch("http://localhost:8000/voterLogin", {
@@ -35,7 +37,7 @@ export const VoterLogin = () => {
                 const data = await res.json()
 
                 if (res.status !== 200) {
-                    // setformLoading(false)
+                    setformLoading(false)
                     alert(data.message)
                 }
                 if (res.status === 200) {
@@ -46,16 +48,16 @@ export const VoterLogin = () => {
                     alert("Login succesful")
                     localStorage.setItem('id', data.user._id)
                     setisLogedin(true)
-                    // setformLoading(false)
+                    setformLoading(false)
                     // navigate('/home')
                 }
             } catch (error) {
-                // setformLoading(false)
+                setformLoading(false)
                 alert("Invalid Username front  or Password")
             }
         }
         else {
-            // setformLoading(false)
+            setformLoading(false)
             alert("Invalid input")
         }
     }
@@ -71,6 +73,7 @@ export const VoterLogin = () => {
             <section className="section form-section">
                 <div className="container form-container flex" >
                     <form className="form-content flex" >
+                         {formLoading ? (<FormLoader/>) : ("")}
                     <h2>Voter Login</h2>
 
                         <div className="form-input flex">

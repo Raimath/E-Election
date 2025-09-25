@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Context } from '../context/context';
+import logo from '../images/logo.png';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +13,7 @@ export const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="logo">MassMaster</div>
+      <div className="logo"><img src={logo} alt='logo'/></div>
 
       <div className="responsive-icons" onClick={toggleMenu}>
         <FontAwesomeIcon
@@ -25,8 +26,10 @@ export const Navbar = () => {
       <ul className={`nav-list ${menuOpen ? 'open' : ''}`}>
 
         <li><NavLink to="/home" onClick={() => setMenuOpen(false)}>Home</NavLink></li>
-        <li><NavLink to="/elections" onClick={() => setMenuOpen(false)}>Elections</NavLink></li>
+        <li><NavLink to="/ongoing" onClick={() => setMenuOpen(false)}>Elections</NavLink></li>
         <li><NavLink to="/participate" onClick={() => setMenuOpen(false)}>Participate</NavLink></li>
+        <li><NavLink to="/evmCreateElection" onClick={() => setMenuOpen(false)}>EVM</NavLink></li>
+        <li><NavLink to="/contact" onClick={() => setMenuOpen(false)}>Contact</NavLink></li>
 
 
         {localStorage.getItem('id') ? (

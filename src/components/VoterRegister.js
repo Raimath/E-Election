@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import { FormLoader } from './FormLoader'
+import { FormLoader } from './Loader'
 
 
 export const VoterRegister = () => {
 
-    // const [formLoading, setformLoading] = useState(false)
-    // const navigate = useNavigate();
+    const [formLoading, setformLoading] = useState(false)
+    const navigate = useNavigate();
 
 
     const [user, setUser] = useState({
@@ -15,7 +15,6 @@ export const VoterRegister = () => {
         age: "",
         phone: "",
         role: "voter",
-        constituency: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -31,9 +30,9 @@ export const VoterRegister = () => {
     }
 
     const handleRegister = async (e) => {
-        const { name, fatherName, address, role, age, phone, constituency, email, password, confirmPassword } = user
+        const { name, fatherName, address, role, age, phone, email, password, confirmPassword } = user
         e.preventDefault();
-        // setformLoading(true)
+        setformLoading(true)
         if (name && email && password && (password === confirmPassword)) {
             // axios.post("http://localhost:8000/register",user).then((res)=> console.log(res))
             const res = await fetch("http://localhost:8000/voterRegister", {
@@ -41,17 +40,17 @@ export const VoterRegister = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ name, fatherName, role, address, age, phone, constituency, email, password })
+                body: JSON.stringify({ name, fatherName, role, address, age, phone, email, password })
             });
             const data = await res.json()
-            // setformLoading(false)
+            setformLoading(false)
             alert(data.message)
-            // navigate('/login')
+            navigate('/login')
 
         }
         else {
             alert("Invalid input")
-            // setformLoading(false)
+            setformLoading(false)
         }
     }
     return (
@@ -61,7 +60,7 @@ export const VoterRegister = () => {
             <section className="section form-section">
                 <div className="container form-container flex">
                     <form className=" form-content flex" >
-                        {/* {formLoading ? (<FormLoader/>) : ("")} */}
+                        {formLoading ? (<FormLoader/>) : ("")}
                         <h2>Voter Register</h2>
 
                         <div className='form-input flex'>
@@ -89,11 +88,7 @@ export const VoterRegister = () => {
                             <input id='phone' name="phone" value={user.phone} type="number" placeholder="phone" required onChange={handleChange} />
                         </div>
 
-                        <div className='form-input flex'>
-                            <label htmlFor='constituency'> Constituency:</label>
-                            <input id='constituency' name="constituency" value={user.address} type="text" placeholder="constituency" required onChange={handleChange} />
-                        </div>
-
+                        
                         <div className='form-input flex'>
                             <label htmlFor='email'> Email:</label>
                             <input id='email' name="email" value={user.email} type="email" placeholder="Email" required onChange={handleChange} />

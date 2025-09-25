@@ -6,6 +6,10 @@ import { CreateElection } from './CreateElection'
 import { OnGoing } from './OnGoing'
 import { Participate } from './Participate'
 import { CandidatLogin } from './CandidatLogin'
+import { Services } from './Services'
+import { Features } from './Features'
+import { Slider } from './Slider'
+import { Contact } from './Contact'
 
 export const Home = () => {
   return (
@@ -14,7 +18,12 @@ export const Home = () => {
     {/* <VoterLogin/> */}
     
     {/* <Participate/> */}
+
+    <Slider/>
+    <Features/>
     <OnGoing/>
+    <Services/>
+    <Contact/>
     {/* <CreateElection/>
     <VoterRegister/>
     <CandidatLogin/> */}
